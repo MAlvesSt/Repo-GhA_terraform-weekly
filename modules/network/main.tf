@@ -57,7 +57,7 @@ resource "aws_subnet" "public" {
   map_public_ip_on_launch = true
   
   # Etiqueta cada subnet -> public-10.0.1.0/24
-  tags = { Name = "${sb_name}${each.key}" }
+  tags = { Name = "${var.sb_name}${each.key}" }
 }
 
 # Route Table para subnets públicas
