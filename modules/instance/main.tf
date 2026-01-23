@@ -26,6 +26,14 @@ resource "aws_instance" "web" {
   # Asigna el security group creado para las instancias a la instancia 
   vpc_security_group_ids = [var.security_group_instance_id]
 
+  user_data = <<-EOF
+                #!/bin/bash
+                yum update -y
+                yum install -y httpd
+                systemctl enable --now httpd
+                echo "¡Esta es la web ${each.key}!" > /var/www/html/index.html
+                EOF
+
   # Tag para cada instacia
   #  - Lo toma del valor definido en la variable que itera
   tags = each.value.tags
